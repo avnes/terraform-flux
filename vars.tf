@@ -37,3 +37,21 @@ variable "cluster_name" {
   default     = null
   description = "Kubernetes cluster name"
 }
+
+variable "use_flux_catalogue" {
+  type        = bool
+  default     = true
+  description = "Should we install more manifests through Flux from another Git repo?"
+}
+
+variable "flux_catalogue_repo_url" {
+  type        = string
+  default     = "https://github.com/avnes/flux-catalogue"
+  description = "GitHub repository name"
+}
+
+variable "flux_catalogue_branch" {
+  type        = string
+  default     = "main"
+  description = "GitHub repository branch name"
+}
