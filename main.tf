@@ -141,6 +141,14 @@ resource "github_repository_file" "catalogue_git" {
   content     = jsonencode(local.catalogue_git)
 }
 
+resource "github_repository_file" "catalogue_resources" {
+  count       = var.use_flux_catalogue ? 1 : 0
+  repository  = github_repository.main.name
+  branch      = var.branch
+  file        = "${local.gitops_dir}/flux-catalogue-resources.yaml"
+  content     = jsonencode(local.catalogue_resources)
+}
+
 resource "github_repository_file" "catalogue_sources" {
   count       = var.use_flux_catalogue ? 1 : 0
   repository  = github_repository.main.name
