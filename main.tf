@@ -91,9 +91,10 @@ resource "kubernetes_secret" "main" {
 }
 
 resource "github_repository" "main" {
-  name       = local.repository_name
-  visibility = var.repository_visibility
-  auto_init  = true
+  name                  = local.repository_name
+  visibility            = var.repository_visibility
+  vulnerability_alerts  = var.vulnerability_alerts
+  auto_init             = true
 }
 
 resource "github_branch_default" "main" {
