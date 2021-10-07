@@ -26,6 +26,12 @@ variable "repository_visibility" {
   }
 }
 
+variable "vulnerability_alerts" {
+  type        = bool
+  default     = true
+  description = "Should vulnerability alerts be sent to repository owner?"
+}
+
 variable "branch" {
   type        = string
   default     = "main"
