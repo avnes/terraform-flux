@@ -21,7 +21,7 @@ sudo dnf install -y terraform
 Create a file called terraform.tfvars with content similar to this:
 
 ```hcl
-cluster_name = "valyria"
+cluster_name = "dragonstone"
 ```
 
 If you want to use a remote backend to store the state, also create a file called backend.tf
