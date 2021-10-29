@@ -24,6 +24,18 @@ Create a file called terraform.tfvars with content similar to this:
 cluster_name = "dragonstone"
 ```
 
+### Define secure variables
+
+You need to tell Terraform how to connect to your GitHub account. Either through
+variables or shell scrip variables as shown below:
+
+```bash
+TF_VAR_github_owner=<REDACTED>
+TF_VAR_github_token=<REDACTED>
+```
+
+### Backend
+
 If you want to use a remote backend to store the state, also create a file called backend.tf
 
 More info about Terraform backends at <https://www.terraform.io/docs/language/settings/backends/>
