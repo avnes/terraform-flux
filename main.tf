@@ -1,7 +1,3 @@
-provider "flux" {}
-
-provider "kubectl" {}
-
 provider "kubernetes" {
   config_path = local.cluster_config
 }
