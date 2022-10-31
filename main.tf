@@ -162,10 +162,10 @@ resource "github_repository_file" "catalogue_products" {
   content    = jsonencode(local.catalogue_products)
 }
 
-resource "github_repository_file" "catalogue_configuration" {
+resource "github_repository_file" "catalogue_config" {
   count      = var.use_flux_catalogue ? 1 : 0
   repository = github_repository.main.name
   branch     = var.branch
-  file       = "${local.gitops_dir}/flux-catalogue-configuration.yaml"
-  content    = jsonencode(local.catalogue_configuration)
+  file       = "${local.gitops_dir}/flux-catalogue-config.yaml"
+  content    = jsonencode(local.catalogue_config)
 }

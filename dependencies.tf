@@ -92,11 +92,11 @@ locals {
     }
   }
 
-  catalogue_configuration = {
+  catalogue_config = {
     "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
     "kind"       = "Kustomization"
     "metadata" = {
-      "name"      = "flux-catalogue-configuration"
+      "name"      = "flux-catalogue-config"
       "namespace" = "flux-system"
     }
     "spec" = {
