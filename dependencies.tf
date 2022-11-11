@@ -20,30 +20,6 @@ locals {
     }
   }
 
-  catalogue_resources = {
-    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
-    "kind"       = "Kustomization"
-    "metadata" = {
-      "name"      = "flux-catalogue-resources"
-      "namespace" = "flux-system"
-    }
-    "spec" = {
-      "interval" = "1m0s"
-      "dependsOn" = [
-        {
-          "name" = "flux-catalogue-sources"
-        }
-      ]
-      "sourceRef" = {
-        "kind" = "GitRepository"
-        "name" = "flux-catalogue-git"
-      }
-      "path"       = "./resources"
-      "prune"      = true
-      "validation" = "client"
-    }
-  }
-
   catalogue_sources = {
     "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
     "kind"       = "Kustomization"
