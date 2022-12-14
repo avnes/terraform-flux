@@ -1,1 +1,1 @@
-cluster_name = "lys"
+cluster_name = "freja"
