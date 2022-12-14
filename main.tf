@@ -17,11 +17,11 @@ resource "tls_private_key" "main" {
 }
 
 data "flux_install" "main" {
-  target_path = local.gitops_dir
+  target_path = "./"
 }
 
 data "flux_sync" "main" {
-  target_path = local.gitops_dir
+  target_path = "./"
   url         = "ssh://git@github.com/${var.github_owner}/${local.repository_name}.git"
   branch      = var.branch
 }
@@ -130,34 +130,26 @@ resource "github_repository_file" "kustomize" {
 # Additional Flux manifests                                                    #
 ################################################################################
 
-resource "github_repository_file" "catalogue_git" {
+resource "github_repository_file" "catalogue" {
   count      = var.use_flux_catalogue ? 1 : 0
   repository = github_repository.main.name
   branch     = var.branch
-  file       = "${local.gitops_dir}/flux-catalogue-git.yaml"
-  content    = jsonencode(local.catalogue_git)
+  file       = "catalogue.yaml"
+  content    = jsonencode(local.catalogue)
 }
 
-resource "github_repository_file" "catalogue_sources" {
+resource "github_repository_file" "sources" {
   count      = var.use_flux_catalogue ? 1 : 0
   repository = github_repository.main.name
   branch     = var.branch
-  file       = "${local.gitops_dir}/flux-catalogue-sources.yaml"
-  content    = jsonencode(local.catalogue_sources)
+  file       = "sources.yaml"
+  content    = jsonencode(local.sources)
 }
 
-resource "github_repository_file" "catalogue_products" {
+resource "github_repository_file" "infrastructure" {
   count      = var.use_flux_catalogue ? 1 : 0
   repository = github_repository.main.name
   branch     = var.branch
-  file       = "${local.gitops_dir}/flux-catalogue-products.yaml"
-  content    = jsonencode(local.catalogue_products)
-}
-
-resource "github_repository_file" "catalogue_config" {
-  count      = var.use_flux_catalogue ? 1 : 0
-  repository = github_repository.main.name
-  branch     = var.branch
-  file       = "${local.gitops_dir}/flux-catalogue-config.yaml"
-  content    = jsonencode(local.catalogue_config)
+  file       = "infrastructure.yaml"
+  content    = jsonencode(local.infrastructure)
 }

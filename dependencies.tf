@@ -1,14 +1,13 @@
 locals {
   cluster_config  = "~/.kube/${var.cluster_name}.config"
-  gitops_dir      = "gitops"
   repository_name = var.repository_name != null ? var.repository_name : "${var.cluster_name}-flux"
   known_hosts     = "github.com ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBEmKSENjQEezOmxkZMy7opKgwFB9nkt5YRrYMjNuG5N87uRgg6CLrbo5wAdT/y6v0mKV0U2w0WZ2YB/++Tpockg="
 
-  catalogue_git = {
-    "apiVersion" = "source.toolkit.fluxcd.io/v1beta1"
+  catalogue = {
+    "apiVersion" = "source.toolkit.fluxcd.io/v1beta2"
     "kind"       = "GitRepository"
     "metadata" = {
-      "name"      = "flux-catalogue-git"
+      "name"      = "catalogue"
       "namespace" = "flux-system"
     }
     "spec" = {
@@ -20,11 +19,11 @@ locals {
     }
   }
 
-  catalogue_sources = {
-    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
+  sources = {
+    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta2"
     "kind"       = "Kustomization"
     "metadata" = {
-      "name"      = "flux-catalogue-sources"
+      "name"      = "sources"
       "namespace" = "flux-system"
     }
     "spec" = {
@@ -36,7 +35,7 @@ locals {
       ]
       "sourceRef" = {
         "kind" = "GitRepository"
-        "name" = "flux-catalogue-git"
+        "name" = "catalogue"
       }
       "path"       = "./sources"
       "prune"      = true
@@ -44,49 +43,25 @@ locals {
     }
   }
 
-  catalogue_products = {
-    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
+  infrastructure = {
+    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta2"
     "kind"       = "Kustomization"
     "metadata" = {
-      "name"      = "flux-catalogue-products"
+      "name"      = "infrastructure"
       "namespace" = "flux-system"
     }
     "spec" = {
       "interval" = "1m0s"
       "dependsOn" = [
         {
-          "name" = "flux-catalogue-sources"
+          "name" = "sources"
         }
       ]
       "sourceRef" = {
         "kind" = "GitRepository"
-        "name" = "flux-catalogue-git"
+        "name" = "catalogue"
       }
-      "path"       = "./products"
-      "prune"      = true
-      "validation" = "client"
-    }
-  }
-
-  catalogue_config = {
-    "apiVersion" = "kustomize.toolkit.fluxcd.io/v1beta1"
-    "kind"       = "Kustomization"
-    "metadata" = {
-      "name"      = "flux-catalogue-config"
-      "namespace" = "flux-system"
-    }
-    "spec" = {
-      "interval" = "1m0s"
-      "dependsOn" = [
-        {
-          "name" = "flux-catalogue-products"
-        }
-      ]
-      "sourceRef" = {
-        "kind" = "GitRepository"
-        "name" = "flux-catalogue-git"
-      }
-      "path"       = "./configuration"
+      "path"       = "./infrastructure"
       "prune"      = true
       "validation" = "client"
     }
