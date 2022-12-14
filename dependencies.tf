@@ -61,7 +61,7 @@ locals {
         "kind" = "GitRepository"
         "name" = "catalogue"
       }
-      "path"       = "./infrastructure"
+      "path"       = "./clusters/${var.cluster_name}"
       "prune"      = true
       "validation" = "client"
     }
